@@ -11,11 +11,15 @@ import './styles/index.css';
 const container = document.getElementById('root');
 if (!container) throw new Error('#root is missing from index.html');
 
+const base = import.meta.env.BASE_URL;
+const basename = base.startsWith('/') ? base : window.location.pathname.replace(/[^/]*$/, '');
+
 createRoot(container).render(
   <StrictMode>
-    {/* BASE_URL keeps routing correct when the site is served from /<repo>/ on
-        GitHub Pages rather than from the domain root. */}
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    {/* Keeps routing correct wherever the site is mounted: an absolute base
+        (GitHub Pages serves from /<repo>/) is used as given, while a relative
+        base is resolved to the directory the page is actually served from. */}
+    <BrowserRouter basename={basename}>
       <ThemeProvider>
         <I18nProvider>
           <MDXProvider components={mdxComponents}>

@@ -93,28 +93,6 @@
     min-width: 0;
   }
 
-  html {
-    background-color: var(--ground);
-    /* Theme and language both repaint the whole page; without this the switch
-       reads as a flicker rather than a change. */
-    transition: background-color 420ms var(--ease-out);
-  }
-
-  body {
-    background-color: var(--ground);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: var(--step-body);
-    line-height: 1.5;
-    font-kerning: normal;
-    font-synthesis-weight: none;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    transition:
-      background-color 420ms var(--ease-out),
-      color 420ms var(--ease-out);
-  }
-
   h1, h2, h3 {
     hyphens: none;
     text-wrap: balance;
@@ -152,6 +130,28 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+html {
+  background-color: var(--ground);
+  /* Theme and language both repaint the whole page; without this the switch
+     reads as a flicker rather than a change. */
+  transition: background-color 420ms var(--ease-out);
+}
+
+body {
+  background-color: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.5;
+  font-kerning: normal;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition:
+    background-color 420ms var(--ease-out),
+    color 420ms var(--ease-out);
 }
 
 @layer components {
