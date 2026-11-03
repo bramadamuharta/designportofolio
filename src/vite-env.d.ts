@@ -16,6 +16,12 @@ declare module '*?as=srcset' {
   export default srcset;
 }
 
+/** `?url` — the single processed file's URL, used as the srcset fallback. */
+declare module '*&url' {
+  const src: string;
+  export default src;
+}
+
 /** `?as=metadata` — dimensions and format, for layout-shift-free <img>. */
 declare module '*&as=metadata' {
   const metadata: { src: string; width: number; height: number; format: string };

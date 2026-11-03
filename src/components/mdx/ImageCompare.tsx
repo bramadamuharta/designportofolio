@@ -33,7 +33,8 @@ export function ImageCompare({ before, after, beforeAlt, afterAlt, caption }: Im
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 w-px bg-white mix-blend-difference"
+          // A 4px bar is a graphic element and a visible grab target, not a hairline divider.
+          className="pointer-events-none absolute inset-y-0 w-1 bg-white mix-blend-difference"
           style={{ left: `${position}%` }}
         />
 

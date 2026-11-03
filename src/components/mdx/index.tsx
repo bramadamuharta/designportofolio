@@ -17,7 +17,8 @@ export const mdxComponents: MDXComponents = {
   blockquote: (props) => (
     <blockquote className="my-8 border-l-2 border-(--color-accent) pl-5 text-xl/relaxed italic" {...props} />
   ),
-  hr: () => <hr className="my-14 border-(--color-rule)" />,
+  // Markdown's rule renders as space: a break in the text, with no line drawn.
+  hr: () => <div role="separator" className="h-14" />,
   a: (props) => (
     <a className="underline decoration-(--color-rule) underline-offset-4 hover:decoration-(--color-accent)" {...props} />
   ),

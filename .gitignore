@@ -9,4 +9,4 @@ dist-ssr/
 !.env.example
 
 # taste-skill working output (screenshots, probes, drawn directions)
-.taste/
+.taste-skill/

@@ -37,7 +37,7 @@ export function CaseStudy() {
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{entry.title}</h1>
         <p className="mt-5 text-xl/relaxed text-(--color-ink-muted)">{entry.summary}</p>
 
-        <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-(--color-rule) pt-8 text-sm sm:grid-cols-3">
+        <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 bg-(--color-surface) p-6 text-sm sm:grid-cols-3">
           <div>
             <dt className="text-(--color-ink-muted)">Klien</dt>
             <dd className="mt-1">{entry.client}</dd>

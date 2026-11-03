@@ -11,14 +11,23 @@ Invoke it before building, restyling or reviewing any public-facing page, hero
 or section. Do not invent an art direction — the skill deals researched
 directions and you choose among them.
 
-The tokens in `src/styles/index.css` under `@theme`, and the layout in
-`src/routes/`, are placeholders pending that run. Treat them as scaffolding, not
-as decisions to preserve.
+The home page is a port of an existing Framer portfolio, so its art direction
+was given rather than dealt. Where that reference used a device the house rules
+ban (a live clock, tiny tracked capitals, hairline-outlined pills, blank bands
+of 250px and more), the house rule won. Keep it that way.
 
-The skill's scripts need a Chrome binary. In this cloud environment:
+The skill's scripts need a Chrome binary. In this cloud environment Chromium
+refuses to start as root without a flag, so point `CHROME_PATH` at a wrapper
+rather than at the binary:
 
 ```bash
-export CHROME_PATH=/opt/pw-browsers/chromium
+printf '#!/usr/bin/env bash\nexec /opt/pw-browsers/chromium --no-sandbox --disable-dev-shm-usage "$@"\n' > /tmp/chrome.sh && chmod +x /tmp/chrome.sh && export CHROME_PATH=/tmp/chrome.sh
+```
+
+Run the gate on the production build, never the dev server:
+
+```bash
+npm run build && npx vite preview --port 4173 & node .claude/skills/design-taste-frontend/scripts/lint.mjs src index.html && node .claude/skills/design-taste-frontend/scripts/inspect.mjs http://127.0.0.1:4173
 ```
 
 ## Rules
@@ -43,6 +52,14 @@ export CHROME_PATH=/opt/pw-browsers/chromium
    announced by screen readers. Hold new components to that bar.
 7. **Verify in a browser, not just in the build log.** `npm run build` passing
    is not evidence the page renders. Serve `dist` and look at it.
+8. **Never screenshot this page with `fullPage: true`.** That resizes the
+   viewport at capture time, which restarts the CSS entrance animations and
+   photographs the name lockup mid-rise, so it comes out blank. Size the
+   viewport to the page height first, then capture. The page itself is fine;
+   only the screenshot lies.
+9. **The name lockup is sized by measurement**, not by `clamp()`
+   (`src/components/FittedName.tsx`). Do not replace it with a guessed size:
+   the line is meant to land exactly on the margin at every width.
 
 ## Before saying a change works
 

@@ -1,11 +1,45 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portofolio</title>
-    <meta name="description" content="Portofolio desain — studi kasus dan proses kerja." />
+    <title>Brama Damuharta — Senior Product Designer</title>
+    <meta
+      name="description"
+      content="Portfolio of Brama Damuharta, senior product designer in Jakarta, Indonesia. Six years of digital products for millions of users."
+    />
+    <meta name="theme-color" content="#f6f5f2" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script>
+      // Applies the stored theme and language before first paint. Without this
+      // a visitor who chose dark gets a white flash on every page load.
+      (function () {
+        try {
+          var theme = localStorage.getItem('brama.theme');
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = theme;
+
+          var lang = localStorage.getItem('brama.lang');
+          if (lang !== 'id' && lang !== 'en') {
+            lang = (navigator.languages || [navigator.language || 'en']).some(function (tag) {
+              return String(tag).toLowerCase().indexOf('id') === 0;
+            })
+              ? 'id'
+              : 'en';
+          }
+          document.documentElement.lang = lang;
+
+          // Gates every hidden motion state: without it the page renders
+          // finished rather than invisible.
+          document.documentElement.dataset.js = '';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
