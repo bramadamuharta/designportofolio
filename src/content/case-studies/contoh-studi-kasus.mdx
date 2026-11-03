@@ -1,0 +1,65 @@
+---
+title: 'Contoh Studi Kasus'
+summary: 'File contoh yang menunjukkan setiap bagian dari pipeline konten — frontmatter, prosa, gambar, dan komponen interaktif.'
+client: 'Proyek contoh'
+year: 2026
+role: 'Peran kamu di sini'
+tags: ['UX Research', 'Design System', 'Mobile']
+featured: true
+order: 1
+---
+
+import cover from './images/cover.svg';
+import flowBefore from './images/flow-before.svg';
+import flowAfter from './images/flow-after.svg';
+
+<Figure
+  src={cover}
+  alt="Placeholder untuk gambar cover studi kasus"
+  width={1600}
+  height={1000}
+  priority
+  caption="Gambar di-import, bukan ditulis sebagai string — supaya Vite yang urus hashing, optimasi, dan cache-busting."
+/>
+
+## Masalahnya
+
+Ganti bagian ini dengan konteks nyata: apa yang rusak, siapa yang kena
+dampaknya, dan bagaimana kamu tahu. Angka yang spesifik lebih meyakinkan
+daripada kata sifat.
+
+<Metric value="2.4x" label="Contoh angka — diambil dari hasil kerjanya" />
+
+## Prosesnya
+
+Satu `##` per babak cerita. Markdown biasa jalan seperti biasa — **tebal**,
+*miring*, [tautan](https://example.com), daftar, dan kutipan:
+
+> Kutipan dari pengguna atau klien, kalau ada yang memang pantas dikutip.
+
+Komponen React bisa diselipkan di tengah prosa, dan itu yang membedakan MDX
+dari Markdown biasa:
+
+<ImageCompare
+  before={flowBefore}
+  after={flowAfter}
+  beforeAlt="Placeholder alur sebelum perubahan"
+  afterAlt="Placeholder alur sesudah perubahan"
+  caption="Sebelum / sesudah — digerakkan pakai range input, jadi bisa dipakai lewat keyboard"
+/>
+
+## Hasilnya
+
+Tutup dengan dampaknya, lalu apa yang kamu pelajari. Bagian terakhir ini yang
+paling sering dilewat, padahal itu yang paling dibaca.
+
+---
+
+### Cara menambah studi kasus baru
+
+1. Salin file ini jadi `src/content/case-studies/<slug>.mdx`. Nama file jadi URL-nya.
+2. Isi frontmatter-nya. Kalau ada field yang keliru, build gagal dengan pesan yang menyebut nama filenya — bukan diam-diam rusak.
+3. Taruh gambarnya di `./images/` lalu `import` di atas, seperti contoh ini.
+4. Selesai. Nggak ada komponen yang perlu disentuh, halamannya kebentuk sendiri.
+
+Hapus file ini kalau konten aslinya sudah masuk.

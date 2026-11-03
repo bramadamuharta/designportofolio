@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+/*
+  Design tokens live here, not scattered through components. The taste-skill run
+  will replace these values with a researched direction — type scale, palette
+  and spacing decided from the subject rather than defaulted. Until then they
+  are deliberately plain, so nothing here gets mistaken for a design decision.
+*/
+@theme {
+  --color-ink: oklch(0.18 0.01 260);
+  --color-ink-muted: oklch(0.48 0.01 260);
+  --color-paper: oklch(0.98 0.004 260);
+  --color-rule: oklch(0.88 0.006 260);
+  --color-accent: oklch(0.55 0.17 255);
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Honour the OS setting rather than animating over people who asked us not
+     to. Motion's useReducedMotion covers JS-driven animation; this covers CSS
+     and anything that slips past it. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* A visible focus ring is non-negotiable on a site this keyboard-navigable. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
