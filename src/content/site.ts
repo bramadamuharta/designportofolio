@@ -122,6 +122,13 @@ export const work: {
     href: string;
     cover: string;
     coverSet: string;
+    /**
+     * The field this project floods the section with. Both values are sampled
+     * from the project's own artwork rather than chosen: `bg` is the flat tone
+     * of its card, `ink` the one of the page's two inks that clears 4.5:1 on
+     * it. Measured: Bigbird 5.01:1, Goldenbird 7.99:1.
+     */
+    field: { bg: string; ink: string };
     width: number;
     height: number;
     alt: Bilingual;
@@ -137,6 +144,7 @@ export const work: {
       href: '#',
       cover: bigbirdSrc,
       coverSet: bigbirdSet,
+      field: { bg: '#0467b6', ink: '#f2f0ec' },
       width: 1024,
       height: 672,
       alt: {
@@ -151,6 +159,7 @@ export const work: {
       href: '#',
       cover: goldenbirdSrc,
       coverSet: goldenbirdSet,
+      field: { bg: '#d3ae33', ink: '#1a1917' },
       width: 1024,
       height: 672,
       alt: {

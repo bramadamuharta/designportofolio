@@ -1,3 +1,4 @@
+import { InkFill } from '@/components/InkFill';
 import { about, intro, playground } from '@/content/site';
 import { useI18n } from '@/lib/i18n';
 
@@ -17,7 +18,7 @@ export function About() {
       </h2>
 
       <div className="mt-10 grid gap-x-(--gutter) gap-y-8 sm:mt-14 md:grid-cols-12">
-        <p className="statement md:col-span-6" data-reveal="rise" style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>{t(intro.greeting)}</p>
+        <p className="statement ink-fill-host md:col-span-6" data-reveal="rise" style={{ '--reveal-delay': '90ms' } as React.CSSProperties}><InkFill text={t(intro.greeting)} /></p>
         <p className="copy md:col-span-5 md:col-start-8 md:pt-2" data-reveal="rise" style={{ '--reveal-delay': '180ms' } as React.CSSProperties}>{t(intro.experience)}</p>
       </div>
 

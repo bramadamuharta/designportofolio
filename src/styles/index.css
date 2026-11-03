@@ -25,6 +25,12 @@
     U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+@property --muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: oklch(0.44 0.006 85);
+}
+
 /* ---------------------------------------------------------------------------
    Tokens. One ground, one ink, one muted, one accent — no greys in between.
    The accent is reserved for focus and selection; the page itself is
@@ -325,5 +331,53 @@
   }
   to {
     transform: translate3d(0, 3%, 0) scale(1.07);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The signature: a section that takes the colour of the project in hand.
+   Four of this designer's five employers move people across Jakarta, and each
+   fleet owns a colour. So the work section is a field, and the project being
+   looked at decides what colour it is. Flat, hard-edged, with its own ink —
+   never a gradient, and never --muted on a coloured ground.
+--------------------------------------------------------------------------- */
+@layer components {
+  .field-swap {
+    transition:
+      background-color 420ms ease,
+      color 420ms ease,
+      --muted 420ms ease;
+  }
+
+  /* The grey-to-ink statement fill. Full ink is the default, so a browser
+     without scroll timelines shows a finished sentence rather than a grey one. */
+  .ink-fill > span {
+    color: inherit;
+  }
+
+  /* The timeline is declared on the paragraph, not on the words: `view()` needs
+     a box, and an inline span does not give it one — the animation then sits at
+     its start value forever. */
+  .ink-fill-host {
+    view-timeline-name: --ink-statement;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-js] .ink-fill > span {
+      /* 58%, not the 45% the recipe suggests: a word a reader may stop on
+         has to clear 4.5:1 even before it fills. Measured 5.28:1 light,
+         5.13:1 dark. */
+      color: color-mix(in oklab, var(--ink) 58%, var(--ground));
+      animation: ink-in linear both;
+      animation-timeline: --ink-statement;
+    }
+  }
+}
+
+@keyframes ink-in {
+  to {
+    color: var(--ink);
   }
 }
