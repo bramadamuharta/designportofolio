@@ -77,8 +77,14 @@ export function caseStudiesPlugin(contentDir = 'src/content/case-studies'): Plug
       if (id !== RESOLVED_ID) return null;
       const entries = await readEntries(dir);
       // addWatchFile so editing frontmatter in dev re-runs this load.
+      //
+      // Only the .mdx files, never the directory itself: Vite feeds a virtual
+      // module's watched ids back through import analysis, and a directory
+      // resolves to nothing, so watching `dir` made every dev request 500 with
+      // `Failed to resolve import ".../case-studies"`. A new or renamed file is
+      // picked up by the watcher in configureServer below, which is what that
+      // hook is for.
       for (const entry of entries) this.addWatchFile(join(dir, `${entry.slug}.mdx`));
-      this.addWatchFile(dir);
       return `export default ${JSON.stringify(entries)};`;
     },
 
