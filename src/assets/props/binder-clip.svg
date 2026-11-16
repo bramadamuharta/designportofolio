@@ -1,0 +1,24 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Binder clip" filter="url(#filter0_d_0_150)">
+<g clip-path="url(#clip0_0_150)">
+<path id="Vector" d="M22 35L14 5C14 3 15.3333 2 18 2H22" stroke-width="3" stroke-linecap="round" stroke="#B9BEC4"/>
+<path id="Vector_2" d="M62 35L70 5C70 3 68.6667 2 66 2H62" stroke-width="3" stroke-linecap="round" stroke="#B9BEC4"/>
+<path id="Vector_3" d="M8 31H76L70 73H14L8 31Z" fill="#1C1D21"/>
+<path id="Vector_4" d="M10 31H74L73 37H11L10 31Z" fill="#3A3C42"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_150" x="-4" y="0" width="96" height="86" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="2" dy="5"/>
+<feGaussianBlur stdDeviation="3"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_150"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_150" result="shape"/>
+</filter>
+<clipPath id="clip0_0_150">
+<rect width="84" height="74" fill="white" transform="translate(0 1)"/>
+</clipPath>
+</defs>
+</svg>

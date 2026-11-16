@@ -1,0 +1,25 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="154" height="44" viewBox="0 0 154 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Washi tape" filter="url(#filter0_d_0_225)">
+<g clip-path="url(#clip0_0_225)">
+<path id="Vector" d="M6 3L148 1L152 7L148 13L152 19L148 25L152 31L148 39L6 41L2 35L6 29L2 23L6 17L2 11L6 3Z" fill="#E9DDB5" fill-opacity="0.88"/>
+<g id="Vector_2">
+<path d="M6 3L148 1Z" fill="black"/>
+<path d="M6 3L148 1" stroke="white" stroke-opacity="0.35"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_225" x="0" y="0" width="154" height="44" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_225"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_225" result="shape"/>
+</filter>
+<clipPath id="clip0_0_225">
+<rect width="150" height="40" fill="white" transform="translate(2 1)"/>
+</clipPath>
+</defs>
+</svg>

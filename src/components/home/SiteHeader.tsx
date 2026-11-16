@@ -1,56 +1,49 @@
-import { identity, languageNames, ui } from '@/content/site';
+import { headerActions, nav, ui } from '@/content/site';
 import { useI18n } from '@/lib/i18n';
-import { useTheme } from '@/lib/theme';
 
 /**
- * Small furniture: the wordmark at one end, the two controls at the other, on
- * the page's own margins with no bar, border or background behind it.
+ * The bar from the Figma frame: section links at one margin, two actions at
+ * the other, laid straight over the hero photograph with no chrome behind it.
+ *
+ * The reference set the links at 13px with positive tracking. They are at a
+ * readable size here instead, which is the house rule the project has followed
+ * since the first port.
  */
 export function SiteHeader() {
-  const { t, language, toggleLanguage } = useI18n();
-  const { theme, toggleTheme } = useTheme();
-
-  const nextLanguage = language === 'id' ? 'en' : 'id';
+  const { t } = useI18n();
 
   return (
-    <header className="wrap flex items-center justify-between gap-6 pt-6 sm:pt-8">
-      <a
-        href="#top"
-        className="text-body font-medium no-underline transition-opacity duration-300 hover:opacity-60"
-      >
-        {identity.wordmark}
-      </a>
+    <header className="absolute inset-x-0 top-0 z-20">
+      <div className="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-6">
+        <nav aria-label={t(ui.primaryNavLabel)}>
+          <ul className="flex flex-wrap items-center gap-x-7 gap-y-2 sm:gap-x-9">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="text-small no-underline opacity-90 transition-opacity duration-200 hover:opacity-100"
+                >
+                  {t(item.label)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <nav className="flex items-center gap-5 sm:gap-7" aria-label={t(ui.languageLabel)}>
-        <button
-          type="button"
-          onClick={toggleLanguage}
-          lang={nextLanguage}
-          className="text-body text-muted transition-colors duration-300 hover:text-ink"
-        >
-          {languageNames[nextLanguage]}
-        </button>
-
-        <button
-          type="button"
-          onClick={toggleTheme}
-          aria-label={theme === 'dark' ? t(ui.switchToLight) : t(ui.switchToDark)}
-          aria-pressed={theme === 'dark'}
-          className="group grid size-7 place-items-center"
-        >
-          {/* A disc half-filled in ink: it reads as the two themes themselves
-              rather than as a sun-and-moon pictogram. It turns on press. */}
-          <svg
-            viewBox="0 0 24 24"
-            className="size-5 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-110"
-            style={{ transform: theme === 'dark' ? 'rotate(180deg)' : 'rotate(0deg)' }}
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="10.5" className="fill-none stroke-ink" strokeWidth="1.5" />
-            <path d="M12 1.5a10.5 10.5 0 0 1 0 21Z" className="fill-ink" />
-          </svg>
-        </button>
-      </nav>
+        <div className="flex items-center gap-3">
+          {headerActions.map((action) => (
+            <a
+              key={action.href + t(action.label)}
+              href={action.href}
+              className={`rounded-full px-5 py-3 text-small leading-none font-bold no-underline transition-transform duration-200 hover:-translate-y-0.5 ${
+                action.primary ? 'bg-acid text-board' : 'bg-white text-board'
+              }`}
+            >
+              {t(action.label)}
+            </a>
+          ))}
+        </div>
+      </div>
     </header>
   );
 }

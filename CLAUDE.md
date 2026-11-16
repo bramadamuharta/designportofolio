@@ -11,10 +11,27 @@ Invoke it before building, restyling or reviewing any public-facing page, hero
 or section. Do not invent an art direction — the skill deals researched
 directions and you choose among them.
 
-The home page is a port of an existing Framer portfolio, so its art direction
-was given rather than dealt. Where that reference used a device the house rules
-ban (a live clock, tiny tracked capitals, hairline-outlined pills, blank bands
-of 250px and more), the house rule won. Keep it that way.
+The home page is a port of a Figma frame (`Portofolio-Web`, node `8:442`), so
+its art direction was given rather than dealt. Where that frame used a device
+the house rules ban — index numbering (`No. 01`–`No. 06`), tiny tracked
+capitals, a two-tone heading, monospace captions, a backdrop-blurred pill,
+hairline card borders, a dashed outline box, decorative gradients, an emoji —
+the house rule won. Keep it that way.
+
+Two devices the frame needs are kept against the rules, and the gate is told
+about each rather than hidden from:
+
+* **Paper shadows.** Paper laid on a board casts one, and without it the whole
+  scrapbook direction flattens into cards. The three `.paper*` rules in
+  `src/styles/index.css` carry `taste-skill-ignore`, and the inspector is run
+  with `--allow shadow`.
+* **Two photo scrims.** `Hero.tsx` and `AboutCta.tsx` each declare their scrim
+  as a one-line `SCRIM` constant carrying `taste-skill-ignore`, which is the
+  gradient the house rules explicitly allow over a photograph.
+
+The frame also carries no `h1` — its only identifying words are a 19px note in
+the corner — and it leaves the About section unlabelled. Both were added, and
+both must stay.
 
 The skill's scripts need a Chrome binary. In this cloud environment Chromium
 refuses to start as root without a flag, so point `CHROME_PATH` at a wrapper
@@ -27,8 +44,13 @@ printf '#!/usr/bin/env bash\nexec /opt/pw-browsers/chromium --no-sandbox --disab
 Run the gate on the production build, never the dev server:
 
 ```bash
-npm run build && npx vite preview --port 4173 & node .claude/skills/design-taste-frontend/scripts/lint.mjs src index.html && node .claude/skills/design-taste-frontend/scripts/inspect.mjs http://127.0.0.1:4173
+npm run build && npx vite preview --port 4173 & node .claude/skills/design-taste-frontend/scripts/lint.mjs src index.html && node .claude/skills/design-taste-frontend/scripts/inspect.mjs http://127.0.0.1:4173 --allow shadow
 ```
+
+The page's standing result is **0 FAIL, 2 WARN**. Both WARNs are answered, not
+outstanding: `palette-cream` sees the cream paper stock, which is never the
+page ground (that is `#0a0d14`) but always a sheet lying on it; `no-footage` is
+true and stays true until there is an honest clip of this designer's own work.
 
 ## Rules
 
@@ -52,11 +74,16 @@ npm run build && npx vite preview --port 4173 & node .claude/skills/design-taste
    announced by screen readers. Hold new components to that bar.
 7. **Verify in a browser, not just in the build log.** `npm run build` passing
    is not evidence the page renders. Serve `dist` and look at it.
-8. **Never screenshot this page with `fullPage: true`.** That resizes the
-   viewport at capture time, which restarts the CSS entrance animations and
-   photographs the name lockup mid-rise, so it comes out blank. Size the
-   viewport to the page height first, then capture. The page itself is fine;
-   only the screenshot lies.
+8. **Never screenshot this page with `fullPage: true`, and do not resize the
+   viewport to the page height either.** `fullPage` resizes at capture time,
+   which restarts the CSS entrance animations and photographs the name lockup
+   mid-rise. Resizing by hand is worse: the hero is `min-h-svh`, so a viewport
+   set to the document height makes the hero *become* the document and
+   everything below it falls off the shot. Keep the viewport fixed at
+   1440×900, walk down in 900px steps, and capture each screen. Walk to the
+   bottom once before measuring, too — the scroll reveals add height, so a
+   height read on load misses the footer. The page itself is fine; only the
+   screenshot lies.
 9. **The name lockup is sized by measurement**, not by `clamp()`
    (`src/components/FittedName.tsx`). Do not replace it with a guessed size:
    the line is meant to land exactly on the margin at every width.

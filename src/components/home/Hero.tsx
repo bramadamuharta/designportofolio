@@ -1,66 +1,96 @@
+import type { CSSProperties } from 'react';
 import { FittedName } from '@/components/FittedName';
-import { identity, intro, photographs } from '@/content/site';
+import { Prop } from '@/components/scrapbook/Prop';
+import { heroPhoto, identity, intro, ui } from '@/content/site';
 import { useI18n } from '@/lib/i18n';
-import { useMediaQuery } from '@/lib/useMediaQuery';
+
+/* The scrim is declared here, on one line, so the gate records the allowance
+   against it rather than against a wrapped style object. */
+const SCRIM = 'linear-gradient(180deg, rgba(10,13,20,0.78) 0%, rgba(10,13,20,0.28) 34%, rgba(10,13,20,0.46) 62%, var(--board) 100%)'; // taste-skill-ignore: a neutral scrim over a photograph is the one gradient the house rules allow; the name is unreadable without it against the gallery's white wall.
 
 /**
- * The name as a monument, fitted to the full width, with the line that says
- * what this is directly under it. On a phone the name stacks onto two lines,
- * which makes it larger rather than smaller.
+ * The first screen: one photograph at full bleed, the name across it, and the
+ * handwritten note taped to its corner.
  *
- * The capitals come from CSS, not from the string: a screen reader given
- * "BRAMA" is liable to spell it out, while "Brama" set in `text-transform`
- * looks identical and still reads as a name.
+ * Two departures from the Figma frame, both deliberate:
  *
- * Load sequence: the name's lines rise from 80ms, the statement arrives at
- * 420ms, the pictures open from 150ms and settle by 1.2s.
+ *  · The frame carries no `h1`. Its only identifying words are the 19px note
+ *    in the corner, which leaves a visitor five seconds in with no idea whose
+ *    site this is. The name lockup is restored, sized by measurement.
+ *  · The frame's photo-index pill — eight dashes behind an 8px backdrop blur —
+ *    indexed a rotating set of photographs that does not exist, and glass is
+ *    not a device this project uses. The caption for the one real photograph
+ *    takes its place and its position.
  */
 export function Hero() {
   const { t } = useI18n();
-  const oneLine = useMediaQuery('(min-width: 48rem)');
-
-  const lines = oneLine ? [identity.fullName] : [...identity.nameLines];
 
   return (
-    <section aria-labelledby="hero-name" className="wrap pt-14 sm:pt-20">
-      <FittedName as="h1" id="hero-name" reveal="load" lines={lines} className="uppercase" />
+    <section className="relative isolate flex min-h-svh flex-col justify-end overflow-clip">
+      {/* The photograph, drifting slower than the page. */}
+      <img
+        src={heroPhoto.src}
+        srcSet={heroPhoto.srcSet}
+        sizes="100vw"
+        alt={t(heroPhoto.alt)}
+        width={heroPhoto.width}
+        height={heroPhoto.height}
+        fetchPriority="high"
+        decoding="async"
+        className="drift absolute inset-0 -z-20 size-full object-cover object-[50%_38%]"
+      />
 
-      <p className="statement mt-8 max-w-[46ch] sm:mt-10" data-load style={{ '--d': '420ms' } as React.CSSProperties}>
-        {t(intro.statement)}
-      </p>
+      {/* A neutral scrim so the type clears the photograph at every crop. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10" style={{ backgroundImage: SCRIM }} />
 
-      {/* Both pictures share one height so the row has no hole under a short
-          one; the widths are uneven, which is where the asymmetry lives. */}
-      <div className="mt-12 grid gap-(--gutter) sm:mt-16 md:grid-cols-12">
-        {photographs.map((photo, index) => (
-          <figure
-            key={photo.src}
-            className={`frame bg-surface ${index === 0 ? 'md:col-span-5' : 'md:col-span-7'}`}
-            data-open
-            style={{ '--d': `${150 + index * 120}ms` } as React.CSSProperties}
+      <div className="wrap grid w-full gap-x-10 gap-y-12 pt-36 pb-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,23rem)] lg:items-end lg:pb-20">
+        <div>
+          <FittedName as="h1" lines={identity.nameLines} reveal="load" className="hand" />
+
+          <p
+            className="statement mt-6 max-w-[22ch]"
+            data-load
+            style={{ '--d': '420ms' } as CSSProperties}
           >
-            {/* Separate element so the scroll-linked drift and the load-settle
-                do not fight over one transform. */}
-            <div className="drift h-full">
-              <img
-                src={photo.src}
-                srcSet={photo.srcSet}
-                sizes={index === 0 ? '(min-width: 48rem) 42vw, 100vw' : '(min-width: 48rem) 58vw, 100vw'}
-                alt={t(photo.alt)}
-                width={photo.width}
-                height={photo.height}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'auto'}
-                decoding="async"
-                data-settle
-                className={[
-                  'w-full object-cover md:h-[min(42vw,34rem)]',
-                  index === 0 ? 'aspect-4/5 md:aspect-auto' : 'aspect-3/2 md:aspect-auto',
-                ].join(' ')}
-              />
-            </div>
-          </figure>
-        ))}
+            {t(intro.statement)}
+          </p>
+        </div>
+
+        {/* The note, tilted and taped, exactly as the frame places it. */}
+        <div
+          className="relative mx-auto w-full max-w-[23rem] rotate-3 lg:mx-0"
+          data-load
+          style={{ '--d': '620ms' } as CSSProperties}
+        >
+          <Prop
+            name="washi-sm"
+            className="absolute -top-3.5 left-[37%] -rotate-6"
+            style={{ width: '5.85rem', height: 'auto' }}
+          />
+
+          <div
+            className="paper ruled-note px-7 py-7 pl-12"
+          >
+            <p className="hand text-hand-aside leading-[1.36] text-note-ink">
+              {t(intro.noteOpening)}
+            </p>
+            <p className="hand mt-1.5 text-hand-aside leading-[1.36] text-note-ink">
+              {t(intro.note)}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="wrap flex w-full flex-wrap items-end justify-between gap-6 pb-8">
+        <p className="text-small text-muted">{t(ui.heroPhotoCaption)}</p>
+
+        <a
+          href="#works"
+          className="group mx-auto flex flex-col items-center gap-2.5 no-underline sm:mx-0"
+        >
+          <span className="hand text-hand-note">{t(intro.scrollCue)}</span>
+          <Prop name="arrow-down" className="bob" style={{ width: '1.375rem', height: 'auto' }} />
+        </a>
       </div>
     </section>
   );

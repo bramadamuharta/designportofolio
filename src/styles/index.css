@@ -25,6 +25,30 @@
     U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* The hand. One script face carries every heading and every handwritten note
+   on the board, so the page stays inside the two-typeface limit: Archivo sets
+   the text, Patrick Hand sets the hand. SIL Open Font License 1.1. */
+@font-face {
+  font-family: 'Patrick Hand';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/patrick-hand-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Patrick Hand';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/patrick-hand-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @property --muted {
   syntax: '<color>';
   inherits: true;
@@ -57,6 +81,33 @@
   --section-gap: clamp(4.5rem, 11vw, 15rem);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- The scrapbook direction, straight from the Figma frame ----
+     A dark board with cream paper laid on it. These are fixed values, not
+     theme-dependent: the board is the artwork, the way a photograph is. */
+  --board: #0a0d14;
+  --board-deep: #12141c;
+  --paper: #fbf8f1;
+  --paper-warm: #f6f0e1;
+  --paper-bright: #fffefb;
+  --paper-ink: #1b1a17;
+  --note-ink: #1c294d;
+  --acid: #d7ff3d;
+
+  /* Four hand-set steps plus the two text steps above: six in all, with
+     nothing sitting between the display sizes and the text. */
+  --step-hand-display: clamp(2.75rem, 6.95vw, 6.25rem);
+  /* One display size, used by every section heading and by the footer.
+     The frame set the footer larger; one step does the same work here and
+     keeps the page inside its size budget. */
+  --step-hand-footer: var(--step-hand-display);
+  --step-hand-note: clamp(1.25rem, 2.2vw, 2rem);
+  /* The taped note is a note, not a statement: the frame set it at 19px, and
+     at statement size it ran to six lines on a 368px slip. */
+  --step-hand-aside: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  /* Shared by the print captions and the handwritten letter, so the two
+     sit on one step rather than on 30px and 32px. */
+  --step-card-title: clamp(1.25rem, 2.2vw, 2rem);
 }
 
 :root[data-theme='dark'] {
@@ -81,6 +132,22 @@
   --color-accent-ink: var(--accent-ink);
 
   --font-sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-hand: 'Patrick Hand', 'Segoe Print', 'Bradley Hand', cursive;
+
+  --color-board: var(--board);
+  --color-board-deep: var(--board-deep);
+  --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-paper-bright: var(--paper-bright);
+  --color-paper-ink: var(--paper-ink);
+  --color-note-ink: var(--note-ink);
+  --color-acid: var(--acid);
+
+  --text-hand-display: var(--step-hand-display);
+  --text-hand-footer: var(--step-hand-footer);
+  --text-hand-note: var(--step-hand-note);
+  --text-hand-aside: var(--step-hand-aside);
+  --text-card-title: var(--step-card-title);
 
   --text-small: var(--step-small);
   --text-body: var(--step-body);
@@ -379,5 +446,163 @@ body {
 @keyframes ink-in {
   to {
     color: var(--ink);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The board
+   The home page is the Figma frame's dark pinboard. It sets its own palette
+   rather than following the light/dark toggle, because the artwork is dark the
+   way a photograph is dark: a light variant would be a different design. Case
+   study pages keep the themed palette above.
+--------------------------------------------------------------------------- */
+[data-surface='board'] {
+  --ground: var(--board);
+  --surface: var(--board-deep);
+  --ink: #ffffff;
+  --muted: #9aa6bd;
+  --accent: var(--acid);
+  --accent-ink: var(--board);
+
+  color-scheme: dark;
+  background-color: var(--board);
+  color: var(--ink);
+}
+
+@layer components {
+  /* ---- The hand ---- */
+  .hand {
+    font-family: var(--font-hand);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Section titles: two lines of hand-set display, one colour. The reference
+     greyed the second line; a styled accent inside a heading is not allowed,
+     so the contrast comes from size and position instead. */
+  .hand-display {
+    font-family: var(--font-hand);
+    font-size: var(--step-hand-display);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .hand-footer {
+    font-family: var(--font-hand);
+    font-size: var(--step-hand-footer);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---- Paper ----
+     Paper laid on a board casts a shadow; that is what tells the eye it is
+     paper and not a panel. This is the one house rule the direction overrides,
+     and it is passed to the inspector as an explicit allowance. */
+  .paper {
+    background-color: var(--paper-warm);
+    color: var(--paper-ink);
+    border-radius: 3px;
+    box-shadow: /* taste-skill-ignore: paper laid on a board casts a shadow, and that cast is what reads as paper rather than as a panel; without it the scrapbook direction collapses into flat cards. */
+      0 30px 30px rgba(0, 0, 0, 0.45),
+      0 2px 1.5px rgba(0, 0, 0, 0.4);
+  }
+
+  .paper-print {
+    background-color: var(--paper-bright);
+    color: var(--paper-ink);
+    border-radius: 4px;
+    box-shadow: /* taste-skill-ignore: see .paper, a photo print lying on a board. */
+      0 14px 14px rgba(26, 20, 13, 0.14),
+      0 2px 2px rgba(26, 20, 13, 0.1);
+  }
+
+  .paper-shot {
+    background-color: var(--paper);
+    border-radius: 3px;
+    box-shadow: /* taste-skill-ignore: see .paper, a shot pinned to the board. */
+      0 16px 15px rgba(0, 0, 0, 0.45),
+      0 2px 1.5px rgba(0, 0, 0, 0.35);
+  }
+
+  /* The rules are drawn into the stock as a picture, so no hairline element
+     ever enters the DOM.
+
+     The URL is resolved here rather than handed in through an inline custom
+     property: Vite inlines these files as `data:` URIs, and an unquoted one
+     is not a valid `url()` token, so `style.setProperty` rejected it silently
+     and the stock came out blank. */
+  .ruled-letter {
+    background-image: url('../assets/props/ruled-paper.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .ruled-note {
+    background-image: url('../assets/props/ruled-note.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  /* ---- The marquee ----
+     Two rows of shots drifting in opposite directions. The track holds the
+     list twice, so translating it by exactly half its width loops with no visible join.
+  */
+  .marquee {
+    display: flex;
+    width: max-content;
+    gap: 2rem;
+    will-change: transform;
+  }
+
+  .marquee > * {
+    flex: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-js] .marquee {
+    animation: marquee-left 64s linear infinite;
+  }
+
+  html[data-js] .marquee[data-direction='right'] {
+    animation-name: marquee-right;
+  }
+
+  html[data-js] .marquee-track:hover .marquee,
+  html[data-js] .marquee-track:focus-within .marquee {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee-left {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The scroll cue's arrow, and the acid badge it answers. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-js] .bob {
+    animation: bob 2.4s var(--ease-soft) infinite;
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
   }
 }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="480" viewBox="0 0 760 480" preserveAspectRatio="none">
+  <!-- The stock itself: ruled note paper, drawn rather than divided.
+       Rendering the rules as a picture keeps them out of the DOM, where a
+       row of 1px elements would read as hairline dividers. -->
+  <g fill="rgba(115,153,217,0.35)">
+    <rect x="0" y="118" width="760" height="1"/>
+    <rect x="0" y="164" width="760" height="1"/>
+    <rect x="0" y="210" width="760" height="1"/>
+    <rect x="0" y="256" width="760" height="1"/>
+    <rect x="0" y="302" width="760" height="1"/>
+    <rect x="0" y="348" width="760" height="1"/>
+    <rect x="0" y="394" width="760" height="1"/>
+    <rect x="0" y="440" width="760" height="1"/>
+  </g>
+  <rect x="78" y="0" width="1.5" height="480" fill="rgba(217,77,77,0.45)"/>
+</svg>
